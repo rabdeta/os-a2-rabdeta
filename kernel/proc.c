@@ -12,7 +12,6 @@
 #define MLFQ_LEVELS 4
 #define MLFQ_BOOST_INTERVAL 64
 
-static uint last_boost_tick = 0;
 static const int mlfq_slices[MLFQ_LEVELS] = {
   1, 2, 4, 8
 };
@@ -135,7 +134,9 @@ allocproc(void)
     } else {
       release(&p->lock);
     }
-  }
+    }
+
+
   return 0;
 
 found:
@@ -475,16 +476,7 @@ for(;;) {
   acquire(&mlfq_cursor_lock);
 
   // Check whether 64 global ticks have passed.
-  uint now;
 
-  acquire(&tickslock);
-  now = ticks;
-  release(&tickslock);
-
-  if(now - last_boost_tick >= MLFQ_BOOST_INTERVAL) {
-    last_boost_tick = now;
-    mlfq_boost();
-  }
 
 
     // Search from highest to lowest priority.

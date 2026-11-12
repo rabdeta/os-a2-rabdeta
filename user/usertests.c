@@ -958,8 +958,7 @@ reparent(char *s)
       if (pid2 < 0) {
         kill(master_pid);
         exit(1);
-      }
-      exit(0);
+      }      exit(0);
     }
   }
   exit(0);

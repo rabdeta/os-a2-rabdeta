@@ -184,15 +184,18 @@ if(which_dev == 2 && myproc() != 0) {
 void
 clockintr()
 {
-  // Only CPU 0 updates the global tick counter.
   if(cpuid() == 0) {
     acquire(&tickslock);
     ticks++;
+
+    if(ticks % 64 == 0) {
+      mlfq_boost();
+    }
+
     wakeup(&ticks);
     release(&tickslock);
   }
 
-  // Every CPU schedules its next timer interrupt.
   w_stimecmp(r_time() + 1000000);
 }
 
