@@ -180,27 +180,22 @@ if(which_dev == 2 && myproc() != 0) {
 
 
 
+
 void
 clockintr()
 {
-  int boost = 0;
+  // Only CPU 0 updates the global tick counter.
+  if(cpuid() == 0) {
+    acquire(&tickslock);
+    ticks++;
+    wakeup(&ticks);
+    release(&tickslock);
+  }
 
-  acquire(&tickslock);
-  ticks++;
-
-  if(ticks % 64 == 0)
-    boost = 1;
-
-  wakeup(&ticks);
-  release(&tickslock);
-
-  if(boost)
-    mlfq_boost();
-
-  // Ask for the next timer interrupt.
-  // 1000000 is about a tenth of a second.
+  // Every CPU schedules its next timer interrupt.
   w_stimecmp(r_time() + 1000000);
 }
+
 
 
 // check if it's an external interrupt or software interrupt,
