@@ -102,4 +102,11 @@ struct proc {
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
   int trace_mask;              // System calls to trace
+  // Assignment 2: scheduling statistics
+  int runticks;
+  int nsched;
+  int ctime;
+  // a2: MLFQ scheduling
+  int level;
+  int usedticks;
 };

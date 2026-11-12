@@ -108,6 +108,10 @@ void            procdump(void);
 uint64          nproc(void);
 struct uproc;
 int getprocs(struct uproc *buf, int max);
+int getpinfo(uint64, int);
+int mlfq_tick(struct proc *);
+int mlfq_higher_runnable(int);
+void mlfq_boost(void);
 
 // swtch.S
 void            swtch(struct context*, struct context*);

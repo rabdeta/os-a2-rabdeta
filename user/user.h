@@ -3,6 +3,8 @@
 struct stat;
 
 // system calls
+struct pinfo;
+int getpinfo(struct pinfo *buf, int max);
 int fork(void);
 int exit(int) __attribute__((noreturn));
 int wait(int *);

@@ -104,6 +104,7 @@ extern uint64 sys_mkdir(void);
 extern uint64 sys_close(void);
 extern uint64 sys_sync(void);
 extern uint64 sys_trace(void);
+extern uint64 sys_getpinfo(void);
 extern uint64 sys_sysinfo(void);
 extern uint64 sys_getprocs(void);
 
@@ -136,6 +137,7 @@ static uint64 (*syscalls[])(void) = {
   [SYS_trace] sys_trace,
   [SYS_sysinfo] sys_sysinfo,
   [SYS_getprocs] sys_getprocs,
+  [SYS_getpinfo] sys_getpinfo,
   // clang-format on
 };
 
